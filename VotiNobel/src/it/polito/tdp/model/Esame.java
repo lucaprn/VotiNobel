@@ -80,4 +80,7 @@ public class Esame {
 		return String.format("codins: %-6s  crediti: %-2d  voto: %-2d  %s", codins, crediti, voto, nomeCorso);
 	}
 
+
+	
+
 }

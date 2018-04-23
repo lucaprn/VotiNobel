@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.model.Model;
 import it.polito.tdp.model.Esame;
+import it.polito.tdp.model.ListaEsami;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,7 +36,14 @@ public class VotiNobelController {
     void doCalcolaCombinazione(ActionEvent event) {
     		try {
     			int numeroCrediti = Integer.parseInt(txtInput.getText());
-    			List<Esame> voti = model.calcolaSottoinsiemeEsami(numeroCrediti);
+    			this.model.reset();
+    			this.model.calcolaSottoinsiemeEsami(numeroCrediti, 0, new ListaEsami(), new ListaEsami(model.getTuttiEsamiSostenuti()));
+    			List<Esame> sequenza = this.model.getListaEsami();
+    			StringBuilder sb = new StringBuilder();
+    			for(Esame e : sequenza) {
+    				sb.append(e.toString()+"\n");
+    			}
+    			this.txtResult.appendText(sb.toString());
     			
     		} catch (NumberFormatException e) {
     			txtResult.setText("Inserire un numero di crediti > 0");
@@ -44,7 +52,7 @@ public class VotiNobelController {
 
     @FXML
     void doReset(ActionEvent event) {
-    		// reset the UI
+    		this.model.reset();
     		txtInput.clear();
     		txtResult.clear();
     }
